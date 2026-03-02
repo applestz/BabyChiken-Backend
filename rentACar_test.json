@@ -845,6 +845,65 @@
           "response": []
         },
         {
+          "name": "addRent (with exception)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {\r",
+                  "     pm.response.to.have.status(500);\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{TOKEN}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"startDate\": \"2026-03-01T09:00:00.000Z\",\r\n  \"endDate\": \"2026-03-05T18:00:00.000Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/carRentals/69a0775df71efb9f06933b08/rents",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "carRentals",
+                "69a0775df71efb9f06933b08",
+                "rents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "getRents",
           "event": [
             {
