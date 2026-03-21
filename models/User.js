@@ -6,7 +6,8 @@ const UserSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Please add a username'],
-        unique: true
+        unique: true,
+        trim: true
     },
     email: {
         type: String,
@@ -20,15 +21,16 @@ const UserSchema = new mongoose.Schema({
     tel: {
         type: String,
         required: [true, 'Please add a phone number'],
-        unique: true
     },
     firstname: {
         type: String,
         required: [true, 'Please add a firstname'],
+        trim: true
     },
     lastname: {
         type: String,
         required: [true, 'Please add a lastname'],
+        trim: true
     },
     role: {
         type:String,

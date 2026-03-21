@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const CarRental = require('./CarRental');
 
 const RentSchema=new mongoose.Schema ({
     startDate: {
@@ -31,3 +30,6 @@ const RentSchema=new mongoose.Schema ({
 });
 
 module.exports=mongoose.model('Rent', RentSchema);
+
+
+

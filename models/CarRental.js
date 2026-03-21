@@ -31,6 +31,13 @@ const CarRentalSchema = new mongoose.Schema({
     region: {
         type: String,
         required: [true, 'Please add a region']
+    },
+    car: {
+        type: [String],
+        trim: true
+    },
+    picture: {
+        type: String
     }
 }, {
     toJSON: {virtuals: true},

@@ -117,7 +117,7 @@ exports.getMe = async (req, res, next) => {
 exports.resetPassword = async (req,res,next) => {
   try{
     const {currentPassword,newPassword,rePassword} = req.body;
-    const user = await User.findById(req.user.id).select('+password');;
+    const user = await User.findById(req.user.id).select('+password');
 
     if(!user){
       return res.status(404).json({
