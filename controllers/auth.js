@@ -103,7 +103,7 @@ exports.logout = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const {username,email,tel,firstname,lastname,picture} = req.body;
-    const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+    const user = await User.findByIdAndUpdate(req.user.id, { username, email, tel, firstname, lastname, picture }, {
       new: true,
       runValidators: true
     }).select('-password'); 
