@@ -100,30 +100,37 @@ exports.logout = async (req, res, next) => {
   });
 };
 
-exports.updateUser = async (req,res,next) => {  
-  try{
-    const user = await User.findByIdAndUpdate(
-          req.params.id,
-          req.body,
-          {
-            new: true,
-            runValidators: true
-          }
-    );
-    await user.save();
+exports.updateUser = async (req, res, next) => {
+  try {
+    const {username,email,tel,firstname,lastname,picture} = req.body;
+    const user = await User.findById(req.user.id)
 
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: 'User not found'
+      });
+    }
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.tel = tel || user.tel;
+    user.firstname = firstname || user.firstname;
+    user.lastname = lastname || user.lastname;
+    user.picture = picture || user.picture;
+    await user.save();
     return res.status(200).json({
-      success:true,
-      msg: "User information updated successfully."
-    })
-  }
-  catch(e){
+      success: true,
+      msg: 'User information updated successfully.',
+      data: user
+    });
+
+  } catch (e) {
     res.status(500).json({
-      success:false,
-      msg:(`Cannot update user, ${e}`)
-    })
+      success: false,
+      msg: `Cannot update user, ${e}`
+    });
   }
-}
+};
 
 
 
