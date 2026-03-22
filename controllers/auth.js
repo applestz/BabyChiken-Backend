@@ -103,8 +103,8 @@ exports.logout = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const {username,email,tel,firstname,lastname,picture} = req.body;
-    const user = await User.findById(req.user.id)
-
+    const user = await User.findById(req.user.id).select('+password');
+    
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -117,6 +117,7 @@ exports.updateUser = async (req, res, next) => {
     user.firstname = firstname || user.firstname;
     user.lastname = lastname || user.lastname;
     user.picture = picture || user.picture;
+    await user.save();
     return res.status(200).json({
       success: true,
       msg: 'User information updated successfully.',
