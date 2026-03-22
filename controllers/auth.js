@@ -110,7 +110,7 @@ exports.updateUser = async (req,res,next) => {
             runValidators: true
           }
     );
-    await user.save()
+    await user.save();
 
     return res.status(200).json({
       success:true,
