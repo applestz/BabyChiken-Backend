@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema({
         minlength: 6,
         select:false
     },
+    picture : {
+        type: String,
+        default: 'https://drive.google.com/file/d/1lB7fw5c1ZdP_Xb3TGQg4M2JGyfYP-y6O/view?usp=drive_link'
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: {
