@@ -25,7 +25,7 @@ exports.register = async (req, res, next) => {
     console.error(err);
     res.status(400).json({
       success: false,
-      message: ('Cannot register user',err)
+      message: (`Cannot register user: ${err.message}`)
     });
   }
 };
