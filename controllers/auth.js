@@ -117,7 +117,6 @@ exports.updateUser = async (req, res, next) => {
     user.firstname = firstname || user.firstname;
     user.lastname = lastname || user.lastname;
     user.picture = picture || user.picture;
-    await user.save();
     return res.status(200).json({
       success: true,
       msg: 'User information updated successfully.',
