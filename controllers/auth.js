@@ -100,6 +100,31 @@ exports.logout = async (req, res, next) => {
   });
 };
 
+exports.updateUser = async (req,res,next) => {  
+  try{
+    const user = await User.findByIdAndUpdate(
+          req.params.id,
+          req.body,
+          {
+            new: true,
+            runValidators: true
+          }
+    );
+    await user.save()
+
+    return res.status(200).json({
+      success:true,
+      msg: "User information updated successfully."
+    })
+  }
+  catch(e){
+    res.status(500).json({
+      success:false,
+      msg:(`Cannot update user, ${e}`)
+    })
+  }
+}
+
 
 
 // @desc    Get current logged in user
