@@ -45,7 +45,7 @@ const UserSchema = new mongoose.Schema({
     },
     picture : {
         type: String,
-        default: 'https://drive.google.com/file/d/1lB7fw5c1ZdP_Xb3TGQg4M2JGyfYP-y6O/view?usp=drive_link'
+        default: 'https://drive.google.com/uc?export=view&id=1lB7fw5c1ZdP_Xb3TGQg4M2JGyfYP-y6O'
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
