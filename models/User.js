@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema({
         minlength: 6,
         select:false
     },
+    picture : {
+        type: String,
+        default: 'https://drive.google.com/uc?export=view&id=1lB7fw5c1ZdP_Xb3TGQg4M2JGyfYP-y6O'
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: {
@@ -52,9 +56,13 @@ const UserSchema = new mongoose.Schema({
 });
 
 //Encrypt password using bcrypt
-UserSchema.pre('save',async function (next){
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password,salt);
+UserSchema.pre('save', async function(next) {
+  console.log('pre save triggered, isModified password:', this.isModified('password'));
+  console.log('calling route or operation:', this);
+  
+  if (!this.isModified('password')) return;
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 //Sign JWT and return

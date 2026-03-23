@@ -25,7 +25,7 @@ exports.register = async (req, res, next) => {
     console.error(err);
     res.status(400).json({
       success: false,
-      message: ('Cannot register user',err)
+      message: (`Cannot register user: ${err.message}`)
     });
   }
 };
@@ -98,6 +98,35 @@ exports.logout = async (req, res, next) => {
     success: true,
     data: {}
   });
+};
+
+exports.updateUser = async (req, res, next) => {
+  try {
+    const {username,email,tel,firstname,lastname,picture} = req.body;
+    const user = await User.findByIdAndUpdate(req.user.id, { username, email, tel, firstname, lastname, picture }, {
+      new: true,
+      runValidators: true
+    }).select('-password'); 
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: 'User not found'
+      });
+    }
+   
+    return res.status(200).json({
+      success: true,
+      msg: 'User information updated successfully.',
+      data: user
+    });
+
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      msg: `Cannot update user, ${e}`
+    });
+  }
 };
 
 
@@ -179,6 +208,13 @@ const sendTokenResponse = (user, statusCode, res) => {
     .cookie('token', token, options)
     .json({
       success: true,
-      token
+      token,
+      user: {
+        _id: user._id,
+        username: user.username,   // or firstname + lastname
+        email: user.email,
+        role: user.role,
+        token
+      }
     });
 };
