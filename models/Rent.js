@@ -7,7 +7,13 @@ const RentSchema=new mongoose.Schema ({
     },
     endDate: {
         type: Date,
-        required:true
+        required:true,
+        validate: {
+            validator: function(value) {
+                return value > this.startDate
+            },
+            message: 'End date must be after start date'
+        }
     },
     user: {
         type: mongoose.Schema.ObjectId,
