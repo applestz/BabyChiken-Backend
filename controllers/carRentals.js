@@ -15,7 +15,19 @@ exports.getCarRentals = async (req, res, next) => {
     // Fields to exclude
     const removeFields = ['select', 'sort', 'page', 'limit'];
     removeFields.forEach(param => delete reqQuery[param]);
+    if (req.query.search) {
+      const keyword = req.query.search;
 
+      reqQuery.$or = [
+        { name: { $regex: keyword, $options: "i" } },
+        { address: { $regex: keyword, $options: "i" } },
+        { district: { $regex: keyword, $options: "i" } },
+        { province: { $regex: keyword, $options: "i" } },
+        { region: { $regex: keyword, $options: "i" } },
+      ];
+    }
+
+  delete reqQuery.search;
     // Create query string
     let queryStr = JSON.stringify(reqQuery);
 
