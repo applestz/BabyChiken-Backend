@@ -39,7 +39,7 @@ const CarRentalSchema = new mongoose.Schema({
     picture: {
         type: String
     },
-    pricePerDay: {
+    priceperday: {
         type: Number
     },
     rentedUser: {
