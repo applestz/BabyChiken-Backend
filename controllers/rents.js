@@ -13,7 +13,7 @@ exports.getRents = async (req, res, next) => {
 
     query = Rent.find({ user: req.user.id }).populate({
       path: 'carRental',
-      select: 'name address tel'
+      select: 'name address district province picture'
     });
 
   } else {
@@ -25,14 +25,13 @@ exports.getRents = async (req, res, next) => {
         carRental: req.params.carRentalId
       }).populate({
         path: 'carRental',
-        select: 'name address tel'
+        select: 'name address district province picture'
       });
 
     } else {
 
       query = Rent.find().populate({
         path: 'carRental',
-        select: 'name address tel'
       });
 
     }
@@ -66,7 +65,6 @@ exports.getRent = async (req, res, next) => {
 
     const rent = await Rent.findById(req.params.id).populate({
       path: 'carRental',
-      select: 'name address tel'
     });
 
     if (!rent) {
