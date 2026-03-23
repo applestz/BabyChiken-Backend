@@ -13,7 +13,7 @@ exports.getRents = async (req, res, next) => {
 
     query = Rent.find({ user: req.user.id }).populate({
       path: 'carRental',
-      select: 'name address tel'
+      select: 'name address district province picture'
     });
 
   } else {
@@ -25,14 +25,12 @@ exports.getRents = async (req, res, next) => {
         carRental: req.params.carRentalId
       }).populate({
         path: 'carRental',
-        select: 'name address tel'
       });
 
     } else {
 
       query = Rent.find().populate({
         path: 'carRental',
-        select: 'name address tel'
       });
 
     }
