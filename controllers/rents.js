@@ -26,6 +26,9 @@ exports.getRents = async (req, res, next) => {
       }).populate({
         path: 'carRental',
         select: 'name address district province picture'
+      }).populate({
+        path: 'user',
+        select: 'username'
       });
 
     } else {
@@ -63,9 +66,16 @@ exports.getRents = async (req, res, next) => {
 exports.getRent = async (req, res, next) => {
   try {
 
-    const rent = await Rent.findById(req.params.id).populate({
-      path: 'carRental',
-    });
+    const rent = await Rent.findById(req.params.id)
+    
+    if (req.user.role !== 'admin') {
+      rent.populate({
+        path: 'carRental',
+      }).populate({
+        path: 'user',
+        select: 'username firstname lastname tel'
+      });
+    }
 
     if (!rent) {
       return res.status(404).json({
