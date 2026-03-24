@@ -38,6 +38,12 @@ const CarRentalSchema = new mongoose.Schema({
     },
     picture: {
         type: String
+    },
+    pricePerDay: {
+        type: Number
+    },
+    rentedUser: {
+        type: Number
     }
 }, {
     toJSON: {virtuals: true},
