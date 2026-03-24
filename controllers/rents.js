@@ -35,6 +35,9 @@ exports.getRents = async (req, res, next) => {
 
       query = Rent.find().populate({
         path: 'carRental',
+      }).populate({
+        path: 'user',
+        select: 'username'
       });
 
     }
