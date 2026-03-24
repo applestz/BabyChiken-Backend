@@ -101,7 +101,7 @@ exports.getRent = async (req, res, next) => {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: (`Cannot update rent, ${error.message}`)
+      message: (`Cannot find rent, ${error.message}`)
     });
   }
 };
