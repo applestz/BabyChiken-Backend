@@ -69,16 +69,21 @@ exports.getRents = async (req, res, next) => {
 exports.getRent = async (req, res, next) => {
   try {
 
-    const rent = await Rent.findById(req.params.id)
+    let query = Rent.findById(req.params.id).populate({ 
+      path: 'carRental'
+    })
+
     
     if (req.user.role !== 'admin') {
-      rent.populate({
+      query = query.populate({
         path: 'carRental',
       }).populate({
         path: 'user',
         select: 'username firstname lastname tel'
       });
     }
+
+    const rent = await query
 
     if (!rent) {
       return res.status(404).json({
