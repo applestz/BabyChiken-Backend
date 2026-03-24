@@ -67,15 +67,6 @@ exports.getRent = async (req, res, next) => {
   try {
 
     const rent = await Rent.findById(req.params.id)
-    
-    if (req.user.role !== 'admin') {
-      rent.populate({
-        path: 'carRental',
-      }).populate({
-        path: 'user',
-        select: 'username firstname lastname tel'
-      });
-    }
 
     if (!rent) {
       return res.status(404).json({
@@ -83,6 +74,18 @@ exports.getRent = async (req, res, next) => {
         message: `No rent with the id of ${req.params.id}`
       });
     }
+    
+    if (req.user.role !== 'admin') {
+      await rent.populate({
+        path: 'carRental',
+      });
+
+      await rent.populate({
+        path: 'user',
+        select: 'username firstname lastname tel'
+      });
+    }
+
 
     res.status(200).json({
       success: true,
@@ -93,7 +96,7 @@ exports.getRent = async (req, res, next) => {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: (`Cannot update rent, ${error.message}`)
+      message: (`Cannot find rent, ${error.message}`)
     });
   }
 };
