@@ -96,7 +96,7 @@ exports.getRent = async (req, res, next) => {
     console.error(error);
     return res.status(500).json({
       success: false,
-      message: 'Cannot find Rent'
+      message: (`Cannot update rent, ${error.message}`)
     });
   }
 };
@@ -179,14 +179,13 @@ exports.updateRent = async (req, res, next) => {
       });
     }
 
-    rent = await Rent.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true
-      }
-    );
+    rent = await Rent.findById(req.params.id);
+
+    rent.startDate = req.body.startDate ?? rent.startDate;
+    rent.endDate = req.body.endDate ?? rent.endDate;
+    rent.car = req.body.car ?? rent.car;
+
+    await rent.save();
 
     res.status(200).json({
       success: true,
