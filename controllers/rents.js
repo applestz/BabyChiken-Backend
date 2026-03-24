@@ -74,7 +74,7 @@ exports.getRent = async (req, res, next) => {
     })
 
     
-    if (req.user.role !== 'admin') {
+    if (req.user.role === 'admin') {
       query = query.populate({
         path: 'carRental',
       }).populate({
